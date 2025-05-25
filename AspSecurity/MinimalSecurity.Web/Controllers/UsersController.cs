@@ -51,7 +51,7 @@ public class UsersController : ControllerBase
             string token = await _userService.Login( request.Email, request.Password );
             HttpContext.Response.Cookies.Append( "chto-za-kuka", token );
 
-            return Ok( token );
+            return Ok();
         }
         catch ( Exception ex )
         {

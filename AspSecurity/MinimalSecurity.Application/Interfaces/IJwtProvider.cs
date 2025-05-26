@@ -3,5 +3,5 @@
 namespace MinimalSecurity.Application.Interfaces;
 public interface IJwtProvider
 {
-    string GenerateToken( User user );
+    string GenerateToken( UserEntity user );
 }

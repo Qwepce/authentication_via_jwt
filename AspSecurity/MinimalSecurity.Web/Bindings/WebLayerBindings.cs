@@ -1,7 +1,8 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using MinimalSecurity.Domain.Enums;
+using MinimalSecurity.Infrastructure.Authentication;
 using MinimalSecurity.Infrastructure.Jwt;
 
 namespace MinimalSecurity.Web.Bindings;
@@ -12,7 +13,13 @@ public static class WebLayerBindings
     {
         JwtOptions jwtOptions = configuration.GetSection( nameof( JwtOptions ) ).Get<JwtOptions>();
 
-        services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme )
+        services
+            .AddAuthentication( options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            } )
             .AddJwtBearer( options =>
             {
                 options.TokenValidationParameters = new()
@@ -35,6 +42,27 @@ public static class WebLayerBindings
                 };
             } );
 
-        services.AddAuthorization();
+        services.AddAuthorization( options =>
+        {
+            options.AddPolicy( "ReadPolicy", policy =>
+            {
+                policy.AddRequirements( new PermissionRequirement( [ Permission.Read ] ) );
+            } );
+
+            options.AddPolicy( "CreatePolicy", policy =>
+            {
+                policy.AddRequirements( new PermissionRequirement( [ Permission.Create ] ) );
+            } );
+
+            options.AddPolicy( "UpdatePolicy", policy =>
+            {
+                policy.AddRequirements( new PermissionRequirement( [ Permission.Update ] ) );
+            } );
+
+            options.AddPolicy( "DeletePolicy", policy =>
+            {
+                policy.AddRequirements( new PermissionRequirement( [ Permission.Delete ] ) );
+            } );
+        } );
     }
 }

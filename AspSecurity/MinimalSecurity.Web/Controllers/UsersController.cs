@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MinimalSecurity.Application.Interfaces;
 using MinimalSecurity.Web.Contracts;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace MinimalSecurity.Web.Controllers;
 
 [ApiController]
-[Route( "api/[controller]" )]
+[Route( "api" )]
 public class UsersController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -18,16 +16,48 @@ public class UsersController : ControllerBase
         _userService = userService;
     }
 
-    [Authorize]
-    [HttpGet]
-    public async Task<IActionResult> GetInfo()
-    {
-        string message = "If you are here, than u are authenticated user. Congrats!";
+    /// TEST METHODS TEST METHODS TEST METHODS TEST METHODS TEST METHODS TEST METHODS TEST METHODS TEST METHODS TEST METHODS
 
-        string result = await Task.FromResult( message );
+    [Authorize( "ReadPolicy" )]
+    [HttpGet( "get" )]
+    public async Task<IActionResult> SpecificGetEndpoint()
+    {
+        string result = await Task.FromResult( "This endpoint requires default policy in JWT-token claims" );
 
         return Ok( result );
     }
+
+    [Authorize( "UpdatePolicy" )]
+    [HttpPut( "put" )]
+    public async Task<IActionResult> SpecificPutEndpoint()
+    {
+
+        string result = await Task.FromResult( "This endpoint requires update policy in JWT-token claims" );
+
+        return Ok( result );
+    }
+
+    [Authorize( "CreatePolicy" )]
+    [HttpPost( "create" )]
+    public async Task<IActionResult> SpecificPostEndpoint()
+    {
+
+        string result = await Task.FromResult( "This endpoint requires create policy in JWT-token claims" );
+
+        return Ok( result );
+    }
+
+    [Authorize( "DeletePolicy" )]
+    [HttpDelete( "delete" )]
+    public async Task<IActionResult> SpecificDeleteEndpoint()
+    {
+
+        string result = await Task.FromResult( "This endpoint requires delete policy in JWT-token claims" );
+
+        return Ok( result );
+    }
+
+    /// TEST METHODS TEST METHODS TEST METHODS TEST METHODS TEST METHODS TEST METHODS TEST METHODS TEST METHODS TEST METHODS
 
     [HttpPost( "register" )]
     public async Task<IActionResult> RegisterUser( [FromBody] RegisterUserRequest request )

@@ -18,13 +18,13 @@ public class UserService : IUserService
     public async Task Register( string username, string email, string password )
     {
         string hashedPassword = _passwordHasher.GenerateHash( password );
-        User existedUser = await _userRepository.GetByEmail( email );
+        UserEntity existedUser = await _userRepository.GetByEmail( email );
         if ( existedUser is not null )
         {
             throw new InvalidOperationException( $"User with email: {email} already exists" );
         }
 
-        User user = new(
+        UserEntity user = new(
             username,
             hashedPassword,
             email );
@@ -34,7 +34,7 @@ public class UserService : IUserService
 
     public async Task<string> Login( string email, string password )
     {
-        User user = await _userRepository.GetByEmail( email );
+        UserEntity user = await _userRepository.GetByEmail( email );
         if ( user is null )
         {
             throw new InvalidOperationException( $"User with email {email} does not exists" );

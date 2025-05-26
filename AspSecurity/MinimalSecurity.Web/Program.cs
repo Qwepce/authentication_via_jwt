@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.CookiePolicy;
-using Microsoft.Extensions.Options;
 using MinimalSecurity.Application.Bindings;
+using MinimalSecurity.Infrastructure.Authentication.Helpers;
 using MinimalSecurity.Infrastructure.Bindings;
 using MinimalSecurity.Infrastructure.Jwt;
 using MinimalSecurity.Web.Bindings;
@@ -8,6 +8,7 @@ using MinimalSecurity.Web.Bindings;
 var builder = WebApplication.CreateBuilder( args );
 
 builder.Services.Configure<JwtOptions>( builder.Configuration.GetSection( nameof( JwtOptions ) ) );
+builder.Services.Configure<AuthorizationOptions>( builder.Configuration.GetSection( nameof( AuthorizationOptions ) ) );
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

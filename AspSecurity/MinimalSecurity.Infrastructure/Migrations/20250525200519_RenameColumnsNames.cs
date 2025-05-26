@@ -8,51 +8,51 @@ namespace MinimalSecurity.Infrastructure.Migrations
     public partial class RenameColumnsNames : Migration
     {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
+        protected override void Up( MigrationBuilder migrationBuilder )
         {
             migrationBuilder.RenameColumn(
                 name: "Username",
                 table: "User",
-                newName: "username");
+                newName: "username" );
 
             migrationBuilder.RenameColumn(
                 name: "Email",
                 table: "User",
-                newName: "email");
+                newName: "email" );
 
             migrationBuilder.RenameColumn(
                 name: "Id",
                 table: "User",
-                newName: "id");
+                newName: "id" );
 
             migrationBuilder.RenameColumn(
                 name: "HashedPassword",
                 table: "User",
-                newName: "hashed_password");
+                newName: "hashed_password" );
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
+        protected override void Down( MigrationBuilder migrationBuilder )
         {
             migrationBuilder.RenameColumn(
                 name: "username",
                 table: "User",
-                newName: "Username");
+                newName: "Username" );
 
             migrationBuilder.RenameColumn(
                 name: "email",
                 table: "User",
-                newName: "Email");
+                newName: "Email" );
 
             migrationBuilder.RenameColumn(
                 name: "id",
                 table: "User",
-                newName: "Id");
+                newName: "Id" );
 
             migrationBuilder.RenameColumn(
                 name: "hashed_password",
                 table: "User",
-                newName: "HashedPassword");
+                newName: "HashedPassword" );
         }
     }
 }
